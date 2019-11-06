@@ -1,21 +1,18 @@
 import React, { Component } from "react";
 import { loadData } from "../utils/loadData";
+import { Button, Title, Column } from "bloomer"; 
+
 class Quote extends Component {
     state = {
         quote: "Fetching quotes..."
     };
     async componentDidMount() {
-        this.getQuote();
+        const category = this.props.match.params.category_name; 
+        this.getQuote(category);
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.category !== this.props.category) {
-            this.getQuote();
-        }
-    }
-
-    getQuote = async () => {
-        const { category } = this.props; 
+    getQuote = async category => {
+         
         const data = await loadData(
             `https://api.chucknorris.io/jokes/random?category=${category}`
         );
@@ -26,21 +23,22 @@ class Quote extends Component {
         });
     };
 
-    handleClick = () => {
-        this.getQuote();
+    handleClick = e => {
+        e.preventDefault(); 
+        this.getQuote(this.props.match.params.category_name);
     }
 
     render() {
         const { quote } = this.state;
-        const { category } = this.props;
+        const category = this.props.match.params.category_name;  
 
         return (
-            <>
-                <p>{quote}</p>
-                <button onClick={() => this.handleClick()}>
+            <Column isSize='1/2'>
+                <Title isSize={2}>{quote}</Title>
+                <Button isColor="dark" isSize="medium" onClick={e => this.handleClick(e)}>
                     Get Another Quote from the {category} Category!
-                </button>
-            </>
+                </Button>
+            </Column>
         );
     }
 }
