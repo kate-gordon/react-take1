@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { loadData } from "../utils/loadData";
+import { Button, Title, Column } from "bloomer"; 
+
 class Quote extends Component {
     state = {
         quote: "Fetching quotes..."
@@ -31,12 +33,12 @@ class Quote extends Component {
         const category = this.props.match.params.category_name;  
 
         return (
-            <>
-                <p>{quote}</p>
-                <button onClick={e => this.handleClick(e)}>
+            <Column isSize='1/2'>
+                <Title isSize={2}>{quote}</Title>
+                <Button isColor="dark" isSize="medium" onClick={e => this.handleClick(e)}>
                     Get Another Quote from the {category} Category!
-                </button>
-            </>
+                </Button>
+            </Column>
         );
     }
 }
