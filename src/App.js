@@ -1,23 +1,30 @@
-import React, { Component } from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Link} from "react-router-dom"; 
 import Quote from "./components/quotes";
 import "./App.css";
+import CategoryList from "./components/categoryList";
 
-class App extends Component {
-    state = {
-        category: "dev"
-    };
-    render() {
-        const { category } = this.state;
+function App() {
         return (
             <div className="App">
-                <Quote category={category} />
-                <form action="#">
-                  <label>Select a Category</label>
-                  <button type='submit'>Get Quote for this Category</button>
-        </form>
+                <h1>Chuck Reacts</h1>
+                <Router>
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <Route path="/" exact> 
+                        <CategoryList />
+                    </Route>
+                    <Route path="/category/:category_name?" component={Quote}/>
+                </Router>
             </div>
-        );
-    }
+        );    
 }
+
 
 export default App;
